@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>⚠️ RAWNSOWER | LOCK BY ZIPER</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 30% 10%, #3c0000, #0f0000);
+            font-family: 'Segoe UI', 'Courier New', 'Fira Code', monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* efek noise / statik biar keliatan kena ransomware */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, 
+                rgba(255, 0, 0, 0.05) 0px, 
+                rgba(255, 0, 0, 0.05) 2px,
+                transparent 2px,
+                transparent 6px),
+                repeating-linear-gradient(90deg, 
+                rgba(200, 0, 0, 0.04) 0px, 
+                rgba(200, 0, 0, 0.04) 1px,
+                transparent 1px,
+                transparent 5px);
+            pointer-events: none;
+            z-index: 1;
+            animation: staticFlicker 0.15s infinite;
+        }
+
+        @keyframes staticFlicker {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.8; }
+        }
+
+        /* CARD UTAMA - gaya hacker modern & responsif */
+        .card {
+            background: rgba(10, 0, 0, 0.85);
+            backdrop-filter: blur(14px);
+            border-radius: 48px;
+            border: 2px solid #ff2a2a;
+            box-shadow: 0 0 35px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 0, 0.2);
+            padding: 30px 24px 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            transition: 0.2s;
+            animation: borderGlow 1s infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% { border-color: #ff2200; box-shadow: 0 0 12px #ff3300; }
+            100% { border-color: #ff6666; box-shadow: 0 0 40px #ff0000; }
+        }
+
+        /* icon hacker */
+        .skull-icon {
+            font-size: 70px;
+            filter: drop-shadow(0 0 12px #ff0000);
+            margin-bottom: 8px;
+            animation: shakeSkull 0.2s infinite alternate;
+        }
+
+        @keyframes shakeSkull {
+            0% { transform: translate(0, 0) rotate(0deg);}
+            100% { transform: translate(2px, -1px) rotate(1deg);}
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ff5e5e, #ff0000, #aa0000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px red;
+            margin-bottom: 12px;
+        }
+
+        /* teks lock by ziper */
+        .lock-badge {
+            background: #1f0000;
+            border-radius: 60px;
+            display: inline-block;
+            padding: 10px 24px;
+            margin: 15px 0;
+            font-size: 1.35rem;
+            font-weight: bold;
+            font-family: monospace;
+            color: #ff6666;
+            border: 1px solid #ff4444;
+            box-shadow: inset 0 0 5px red, 0 0 15px red;
+            letter-spacing: 2px;
+            backdrop-filter: blur(4px);
+        }
+
+        .desc {
+            background: #2a0000cc;
+            border-radius: 28px;
+            padding: 14px 16px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 6px solid #ff4444;
+            font-weight: bold;
+        }
+
+        .desc p {
+            color: #ffbbbb;
+            font-size: 0.9rem;
+            margin: 6px 0;
+            font-family: monospace;
+        }
+
+        .desc .hint {
+            font-size: 0.75rem;
+            color: #ff8888;
+            margin-top: 8px;
+            text-align: center;
+            border-top: 1px dashed #ff5555;
+            padding-top: 8px;
+        }
+
+        /* PIN AREA - SATU KOLOM INPUT (GAK PECAH) */
+        .pin-container {
+            margin: 20px 0 20px;
+        }
+
+        .pin-label {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ff7777;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .single-pin-wrapper {
+            background: #0c0000cc;
+            border-radius: 60px;
+            padding: 5px;
+            border: 1px solid #ff4444;
+            box-shadow: inset 0 0 8px black, 0 0 12px rgba(255,0,0,0.5);
+            transition: 0.1s;
+        }
+
+        .pin-single {
+            width: 100%;
+            background: #0a0000;
+            border: none;
+            padding: 18px 20px;
+            font-size: 1.8rem;
+            text-align: center;
+            font-weight: bold;
+            font-family: monospace;
+            letter-spacing: 12px;
+            color: #ff7777;
+            caret-color: red;
+            border-radius: 60px;
+            outline: none;
+            transition: 0.1s;
+            box-shadow: inset 0 0 5px #ff0000;
+        }
+
+        .pin-single:focus {
+            background: #1f0505;
+            color: #ffaaaa;
+            box-shadow: 0 0 18px red, inset 0 0 5px red;
+            letter-spacing: 14px;
+        }
+
+        /* tombol unlock */
+        .btn-unlock {
+            background: linear-gradient(95deg, #b11f1f, #610000);
+            border: none;
+            width: 90%;
+            padding: 16px 10px;
+            margin: 20px 0 10px;
+            font-size: 1.35rem;
+            font-weight: bold;
+            font-family: monospace;
+            color: #fff0f0;
+            border-radius: 60px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #3a0000;
+            transition: 0.07s linear;
+            border: 1px solid #ff5e5e;
+        }
+
+        .btn-unlock:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #3a0000;
+        }
+
+        .message {
+            background: #1f0000aa;
+            border-radius: 60px;
+            padding: 12px;
+            margin-top: 16px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #ff9f9f;
+            border: 1px solid #ff4444;
+            transition: 0.2s;
+            backdrop-filter: blur(5px);
+        }
+
+        /* footer */
+        .footer {
+            margin-top: 25px;
+            font-size: 0.7rem;
+            color: #aa5555;
+            border-top: 1px solid #aa3333;
+            padding-top: 14px;
+            font-family: monospace;
+        }
+
+        /* resposif hp */
+        @media (max-width: 550px) {
+            .card {
+                padding: 22px 18px 30px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .lock-badge {
+                font-size: 1.1rem;
+                padding: 6px 18px;
+            }
+            .pin-single {
+                font-size: 1.5rem;
+                padding: 14px 12px;
+                letter-spacing: 8px;
+            }
+            .btn-unlock {
+                width: 100%;
+                font-size: 1.2rem;
+                padding: 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .pin-single {
+                font-size: 1.3rem;
+                letter-spacing: 6px;
+            }
+        }
+
+        /* efek glitch teks */
+        @keyframes textGlitchAnim {
+            0% { text-shadow: -1px 0 red, 1px 0 darkred; }
+            50% { text-shadow: 1px 0 red, -1px 0 maroon; }
+            100% { text-shadow: -1px 0 #ff4444; }
+        }
+        .glitch-text {
+            animation: textGlitchAnim 0.12s infinite;
+        }
+
+        /* animasi getar */
+        .shake-card {
+            animation: cardShake 0.08s 3;
+        }
+        @keyframes cardShake {
+            0% { transform: translateX(0px);}
+            25% { transform: translateX(6px);}
+            75% { transform: translateX(-6px);}
+            100% { transform: translateX(0);}
+        }
+    </style>
+</head>
+<body>
+
+<div class="card" id="mainCard">
+    <div class="skull-icon">💀🔥💀</div>
+    <h1>🔴 RAWNSOWER 🔴</h1>
+    <div class="lock-badge" id="lockText">🔒 LOCK BY ZIPER TEME HACKERR 🔒</div>
+
+    <div class="desc">
+        <p>⚠️ <strong>SEMUA FILE TELAH DIENKRIPSI!</strong> ⚠️</p>
+        <p>🔥 Sistem Anda terkena <strong>RAWNSOWER</strong> 🔥</p>
+        <p>💀 Masukkan <strong>PIN UNLOCK</strong> untuk memulihkan data 💀</p>
+        <p class="hint">✧ PIN 6 digit (hanya angka) ✧ | Jangan matikan HP! | ZIPER HACKERR</p>
+    </div>
+
+    <div class="pin-container">
+        <div class="pin-label">✦ ENTER 6-DIGIT PIN ✦</div>
+        <div class="single-pin-wrapper">
+            <input type="password" inputmode="numeric" maxlength="6" class="pin-single" id="pinInput" placeholder="●●●●●●" autocomplete="off">
+        </div>
+    </div>
+
+    <button class="btn-unlock" id="unlockBtn">⚡ UNLOCK / BYPASS ⚡</button>
+    <div class="message" id="msgArea">💀 [ZIPER] MASUKKAN PIN 6 DIGIT UNTUK MEMBUKA KUNCI 💀</div>
+    <div class="footer">🧨 ZIPER TEME HACKERR 🧨 | RAWNSOWER v.666 | 🔴 MODE MERAH BERJALAN 🔴</div>
+</div>
+
+<script>
+    (function() {
+        // ---------- PIN YANG BENAR ----------
+        // PIN gampang diingat tapi keren: 042066 atau 131313
+        const CORRECT_PIN = "042066";   // bebas ganti sesuai selera (6 digit angka)
+        
+        let isUnlocked = false;
+        const pinInput = document.getElementById('pinInput');
+        const unlockBtn = document.getElementById('unlockBtn');
+        const msgArea = document.getElementById('msgArea');
+        const lockTextSpan = document.getElementById('lockText');
+        const mainCard = document.getElementById('mainCard');
+
+        // fungsi bersihkan input & efek
+        function clearPin() {
+            if (!isUnlocked) {
+                pinInput.value = "";
+                pinInput.focus();
+            }
+        }
+
+        // fungsi get pin
+        function getEnteredPin() {
+            return pinInput.value.trim();
+        }
+
+        // efek error dengan getar
+        function wrongPinEffect() {
+            // getar card
+            mainCard.classList.add('shake-card');
+            setTimeout(() => {
+                mainCard.classList.remove('shake-card');
+            }, 300);
+            
+            msgArea.innerHTML = "❌ PIN SALAH! AKSES DITOLAK! ❌<br>⚠️ PERCOBAAN GAGAL, DATA TETAP TERKUNCI ⚠️";
+            msgArea.style.color = "#ffaaaa";
+            msgArea.style.background = "#3a0000aa";
+            msgArea.style.border = "1px solid #ff5555";
+            
+            // efek merah pada input
+            pinInput.style.border = "2px solid #ff0000";
+            pinInput.style.backgroundColor = "#2a0000";
+            setTimeout(() => {
+                if (!isUnlocked) {
+                    pinInput.style.border = "none";
+                    pinInput.style.backgroundColor = "#0a0000";
+                }
+            }, 400);
+            
+            // reset pin setelah 0.8 detik (biar user gak males)
+            setTimeout(() => {
+                if (!isUnlocked) {
+                    pinInput.value = "";
+                    pinInput.focus();
+                }
+            }, 800);
+        }
+        
+        // fungsi sukses unlock (tema tetap hacker, tapi bebas)
+        function unlockSuccess() {
+            if (isUnlocked) return;
+            isUnlocked = true;
+            
+            // ubah tampilan jadi "terbuka" tapi masih gaya hacker
+            msgArea.innerHTML = "✅ [ACCESS GRANTED] ✅<br>🔓 SYSTEM DECRYPTED! DATA ANDA TELAH DIPULIHKAN 🔓<br>💚 TERIMA KASIH SUDAH MEMBAYAR? WKWK, INI CUMA SIMULASI 💚";
+            msgArea.style.color = "#ccffcc";
+            msgArea.style.background = "#004400cc";
+            msgArea.style.border = "1px solid #88ff88";
+            msgArea.style.textShadow = "0 0 5px green";
+            
+            lockTextSpan.innerHTML = "🔓 UNLOCKED BY ZIPER TEME HACKERR 🔓";
+            lockTextSpan.style.color = "#aaffaa";
+            lockTextSpan.style.background = "#113300";
+            lockTextSpan.style.border = "1px solid #88ff88";
+            lockTextSpan.style.boxShadow = "0 0 20px lime";
+            
+            // disable input & ubah tombol
+            pinInput.disabled = true;
+            pinInput.style.opacity = "0.6";
+            pinInput.style.letterSpacing = "normal";
+            pinInput.placeholder = "🔓 UNLOCKED";
+            
+            unlockBtn.innerText = "✔️ DECRYPTED SUCCESS ✔️";
+            unlockBtn.disabled = true;
+            unlockBtn.style.opacity = "0.7";
+            unlockBtn.style.cursor = "default";
+            unlockBtn.style.transform = "none";
+            
+            // ubah deskripsi sedikit
+            const descDiv = document.querySelector('.desc');
+            if (descDiv) {
+                descDiv.innerHTML = `<p>✨ <strong>SISTEM TELAH DIPULIHKAN!</strong> ✨</p>
+                <p>🔥 FILE ANDA SELAMAT BERKAT <strong>ZIPER TEME HACKERR</strong> 🔥</p>
+                <p>💀 JANGAN LUPA UPDATE ANTIVIRUS! 💀</p>
+                <p class="hint">⚡ UNLOCKED - SANDI BERHASIL ⚡</p>`;
+                descDiv.style.borderLeftColor = "#88ff88";
+                descDiv.style.background = "#115511aa";
+            }
+            
+            // efek confetti sederhana (merah+ijo biar hacker party)
+            createHackerConfetti();
+            
+            // ganti judul dikit
+            const titleH1 = document.querySelector('h1');
+            if (titleH1) titleH1.innerHTML = "🔓 DECRYPTED BY ZIPER 🔓";
+            
+            // Hapus efek noise tambahan? biarin aja masih keren
+        }
+        
+        // konfeti gaya hacker
+        function createHackerConfetti() {
+            const colors = ['#ff3333', '#ff5555', '#aa2222', '#33ff33', '#88ff88', '#ffaa00'];
+            for (let i = 0; i < 100; i++) {
+                let conf = document.createElement('div');
+                conf.style.position = 'fixed';
+                conf.style.width = Math.random() * 10 + 5 + 'px';
+                conf.style.height = Math.random() * 10 + 5 + 'px';
+                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.zIndex = '9999';
+                conf.style.top = '-20px';
+                conf.style.left = Math.random() * window.innerWidth + 'px';
+                conf.style.pointerEvents = 'none';
+                conf.style.opacity = '0.9';
+                conf.style.borderRadius = Math.random() > 0.6 ? '50%' : '2px';
+                conf.style.transform = `rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(conf);
+                
+                let duration = Math.random() * 1.2 + 0.8;
+                conf.animate([
+                    { transform: `translateY(0px) rotate(0deg)`, opacity: 1 },
+                    { transform: `translateY(${window.innerHeight + 80}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                ], { duration: duration * 800, easing: 'cubic-bezier(0.2,0.8,0.3,1)' }).onfinish = () => conf.remove();
+            }
+            // pesan apung
+            let popMsg = document.createElement('div');
+            popMsg.innerText = '🔓 UNLOCKED BY ZIPER 🔓';
+            popMsg.style.position = 'fixed';
+            popMsg.style.bottom = '25%';
+            popMsg.style.left = '50%';
+            popMsg.style.transform = 'translateX(-50%)';
+            popMsg.style.backgroundColor = '#aa0000dd';
+            popMsg.style.color = 'white';
+            popMsg.style.fontFamily = 'monospace';
+            popMsg.style.fontWeight = 'bold';
+            popMsg.style.padding = '12px 28px';
+            popMsg.style.borderRadius = '60px';
+            popMsg.style.border = '2px solid gold';
+            popMsg.style.zIndex = '10000';
+            popMsg.style.fontSize = '1.3rem';
+            popMsg.style.backdropFilter = 'blur(12px)';
+            popMsg.style.whiteSpace = 'nowrap';
+            document.body.appendChild(popMsg);
+            setTimeout(() => { popMsg.style.opacity = '0'; setTimeout(() => popMsg.remove(), 500); }, 1700);
+        }
+        
+        // fungsi verifikasi PIN
+        function verifyPin() {
+            if (isUnlocked) return;
+            
+            let enteredPin = getEnteredPin();
+            if (enteredPin.length !== 6) {
+                msgArea.innerHTML = "⚠️ PIN HARUS 6 DIGIT ANGKA! ⚠️\nMASUKKAN 6 ANGKA DENGAN BENAR";
+                msgArea.style.color = "#ffbb88";
+                msgArea.style.background = "#2a0000aa";
+                // efek getar ringan
+                mainCard.classList.add('shake-card');
+                setTimeout(() => mainCard.classList.remove('shake-card'), 250);
+                return;
+            }
+            
+            if (!/^\d+$/.test(enteredPin)) {
+                msgArea.innerHTML = "❗ HANYA ANGKA YANG DIPERBOLEHKAN! ❗\nGUNAKAN 0-9 SAJA";
+                msgArea.style.color = "#ff8888";
+                mainCard.classList.add('shake-card');
+                setTimeout(() => mainCard.classList.remove('shake-card'), 250);
+                return;
+            }
+            
+            // cek pin bener
+            if (enteredPin === CORRECT_PIN) {
+                unlockSuccess();
+            } else {
+                wrongPinEffect();
+            }
+        }
+        
+        // event listener tombol unlock
+        unlockBtn.addEventListener('click', verifyPin);
+        
+        // event enter pada input PIN
+        pinInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                verifyPin();
+            }
+        });
+        
+        // batasi input hanya angka (tanpa ngaco)
+        pinInput.addEventListener('input', function(e) {
+            let val = this.value;
+            val = val.replace(/\D/g, ''); // hapus non-digit
+            if (val.length > 6) val = val.slice(0,6);
+            this.value = val;
+            
+            // bersihkan pesan default jika user mulai ngetik
+            if (msgArea.innerHTML.includes("SALAH") || msgArea.innerHTML.includes("6 DIGIT") || msgArea.innerHTML.includes("HANYA ANGKA")) {
+                msgArea.innerHTML = "💀 [ZIPER] MASUKKAN PIN 6 DIGIT UNTUK MEMBUKA KUNCI 💀";
+                msgArea.style.color = "#ff9f9f";
+                msgArea.style.background = "#1f0000aa";
+            }
+        });
+        
+        // efek glitch berkala di lock badge (tambah seram)
+        setInterval(() => {
+            if (!isUnlocked && lockTextSpan) {
+                if (Math.random() > 0.7) {
+                    lockTextSpan.classList.add('glitch-text');
+                    setTimeout(() => lockTextSpan.classList.remove('glitch-text'), 180);
+                }
+            }
+        }, 1400);
+        
+        // fokus otomatis ke input pin saat load
+        setTimeout(() => {
+            if (!isUnlocked) pinInput.focus();
+        }, 300);
+        
+        // efek jitter teks di pesan
+        setInterval(() => {
+            if (!isUnlocked && msgArea && Math.random() > 0.85) {
+                msgArea.style.transform = "skewX(1deg)";
+                setTimeout(() => { if(msgArea) msgArea.style.transform = ""; }, 100);
+            }
+        }, 2000);
+        
+        // console biar keren
+        console.log("%c🔴 RAWNSOWER ACTIVE 🔴 | LOCK BY ZIPER TEME HACKERR", "color: red; font-size: 16px; font-weight: bold;");
+        console.log("%cMASUKKAN PIN 042066 UNTUK UNLOCK (contoh)", "color: #ff8888; font-size:12px");
+    })();
+</script>
+</body>
+</html>
